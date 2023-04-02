@@ -1,6 +1,8 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,10 +75,22 @@ public class RequestParamController {
 
     @RequestMapping("/request-param-map")
     public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
-
-
         log.info("username = {}",paramMap.get("username"));
         log.info("age = {}", paramMap.get("age"));
+        return "ok";
+    }
+
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData data) {
+
+        log.info("data :::: {}",data);
+        return "ok";
+    }
+
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData data) { //@RequestParam, @ModelAttribute가 생략되면 기본타입인 경우에는 @RequestParam, 나머지는 @ModelAttribute 단, argument resolver로 지정된 타입제외 ex - HttpServletRequest
+
+        log.info("data :::: {}",data);
         return "ok";
     }
 }
